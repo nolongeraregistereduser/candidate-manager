@@ -1,195 +1,171 @@
-import EmailButton from './EmailButton';
+import { useState } from 'react';
 
-export default function CandidateProfile() {
-  const candidate = {
-    name: "Kristi Sipes",
-    rating: 3.5,
-    status: "Active",
-    origin: "Career Site",
-    auditedAt: "13 October, 2023",
-    jobApplied: "Research and Development",
-    personal: {
-      email: "kristisipes@gmail.com",
-      phone: "+62-921-019-112",
-      gender: "Female",
-      birthDate: "May 20, 2000",
-      address: "New York, NY, 10001, United States"
-    },
-    education: {
-      university: "Boston University",
-      qualification: "Bachelor of Engineering",
-      graduationYear: "2014",
-      referral: "Not Provided"
-    }
+export default function CandidateProfile({ candidate }) {
+  const [emailSent, setEmailSent] = useState(false);
+  
+  const handleSendEmail = () => {
+    setEmailSent(true);
+    setTimeout(() => setEmailSent(false), 3000);
   };
-
+  
+  if (!candidate) return null;
+  
   return (
     <div className="p-6">
-      {/* Header with photo, name and rating */}
-      <div className="flex items-start mb-6">
-        <div className="mr-4">
-          <div className="w-16 h-16 rounded-full bg-gray-300 overflow-hidden">
-            <img 
-              src={`https://ui-avatars.com/api/?name=${candidate.name}&background=random`} 
-              alt={candidate.name} 
-              className="w-full h-full object-cover"
-            />
+      {/* Header section with smaller button and full name */}
+      <div className="flex justify-between items-start mb-6">
+        {/* Left: Avatar and name info */}
+        <div className="flex items-start gap-4 max-w-[70%]">
+          {/* Profile avatar with initials */}
+          <div className="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center text-xl font-bold text-pink-700 flex-shrink-0">
+            {candidate.name.split(' ').map(n => n[0]).join('')}
           </div>
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-semibold flex items-center">
-                {candidate.name} 
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 3a1 1 0 01.707.293l.707.707L12.828 2.828a1 1 0 011.415 0l2.828 2.828a1 1 0 010 1.415L14.414 10l2.657 2.657a1 1 0 010 1.415l-2.828 2.828a1 1 0 01-1.415 0L10 13.172l-.707.707a1 1 0 01-1.414 0l-2.828-2.828a1 1 0 010-1.415L7.88 7 5.121 4.243a1 1 0 010-1.415l2.83-2.828a1 1 0 011.414 0l1.328 1.328.707-.707A1 1 0 0110 3z" />
-                </svg>
-              </h1>
-              <div className="flex items-center">
-                <span className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <span className="ml-1 text-sm font-medium">{candidate.rating} Overall</span>
-                </span>
-                <span className="ml-3 text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">
-                  • {candidate.status}
-                </span>
+          
+          {/* Name, rating and status - allowing full name to show */}
+          <div>
+            <h1 className="text-lg font-semibold text-gray-900 break-words">{candidate.name}</h1>
+            <div className="flex items-center mt-1">
+              <span className="text-sm text-gray-600 mr-1">Overall</span>
+              <span className="font-medium text-gray-800">{candidate.rating}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <div className="mt-1">
+              <div className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 items-center">
+                <span className="w-1.5 h-1.5 mr-1 rounded-full bg-green-500"></span>
+                Active
               </div>
             </div>
-            <EmailButton email={candidate.personal.email} />
           </div>
         </div>
-      </div>
-      
-      {/* Job Application Details */}
-      <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-        <div>
-          <p className="text-gray-500">Origin</p>
-          <p>{candidate.origin}</p>
-        </div>
-        <div>
-          <p className="text-gray-500">Audited at</p>
-          <p>{candidate.auditedAt}</p>
-        </div>
-        <div className="col-span-2">
-          <p className="text-gray-500">Job Applied</p>
-          <p>{candidate.jobApplied}</p>
-        </div>
-      </div>
-      
-      {/* Application tabs */}
-      <div className="flex border-b mb-6">
-        <button className="px-4 py-2 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">Job Application</button>
-        <button className="px-4 py-2 text-gray-500 text-sm">Resume</button>
-        <button className="px-4 py-2 text-gray-500 text-sm">Form Submission</button>
-        <button className="px-4 py-2 text-gray-500 text-sm">Interview</button>
-      </div>
-      
-      {/* Personal Information */}
-      <div className="mb-6">
-        <h2 className="font-medium mb-3">Personal Information</h2>
-        <div className="space-y-3">
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        
+        {/* Right: Smaller Send Email button */}
+        <div className="relative flex-shrink-0">
+          <button 
+            onClick={handleSendEmail}
+            className="bg-teal-600 text-white rounded-md px-3 py-2 w-[110px] flex items-center justify-center hover:bg-teal-700 transition-colors shadow-sm text-sm"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <span className="text-gray-600 w-28">Email Address</span>
-            <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded">{candidate.personal.email}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            <span className="text-gray-600 w-28">Phone Number</span>
-            <span>{candidate.personal.phone}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span className="text-gray-600 w-28">Gender</span>
-            <span>{candidate.personal.gender}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span className="text-gray-600 w-28">Birthdate</span>
-            <span>{candidate.personal.birthDate}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span className="text-gray-600 w-28">Living Address</span>
-            <span>{candidate.personal.address}</span>
-          </div>
+            Send Email
+          </button>
+          
+          {/* Email sent notification */}
+          {emailSent && (
+            <div className="absolute top-full right-0 mt-2 py-2 px-3 bg-green-100 text-green-800 text-sm rounded-md shadow-md animate-fade-in">
+              Email has been sent
+            </div>
+          )}
         </div>
       </div>
       
-      {/* Education Information */}
-      <div className="mb-6">
-        <h2 className="font-medium mb-3">Education Information</h2>
-        <div className="space-y-3">
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M12 14l9-5-9-5-9 5 9 5z" />
-              <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-            </svg>
-            <span className="text-gray-600 w-28">University</span>
-            <span>{candidate.education.university}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-gray-600 w-28">Qualification</span>
-            <span>{candidate.education.qualification}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2v4l.586-.586z" />
-            </svg>
-            <span className="text-gray-600 w-28">Year Graduation</span>
-            <span>{candidate.education.graduationYear}</span>
-          </div>
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-            </svg>
-            <span className="text-gray-600 w-28">Referred</span>
-            <span className="text-gray-500">{candidate.education.referral}</span>
-          </div>
+      {/* Job information with grid layout */}
+      <div className="grid grid-cols-2 gap-x-6 gap-y-3 mb-6">
+        <div>
+          <p className="text-sm font-medium text-gray-500">Origin</p>
+          <p className="text-gray-900 font-medium">{candidate.origin}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium text-gray-500">Audited at</p>
+          <p className="text-gray-900 font-medium">{candidate.auditedAt}</p>
+        </div>
+        <div className="col-span-2">
+          <p className="text-sm font-medium text-gray-500">Job Applied</p>
+          <p className="text-gray-900 font-medium">{candidate.jobApplied}</p>
         </div>
       </div>
       
-      {/* Notes */}
-      <div>
-        <h2 className="font-medium mb-3">Notes</h2>
-        <div className="border rounded-lg p-3">
-          <textarea 
-            className="w-full min-h-[80px] focus:outline-none resize-none" 
-            placeholder="Write notes..."
-          ></textarea>
-          <div className="flex justify-end space-x-2 mt-2">
-            <button className="p-1 hover:bg-gray-100 rounded">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      {/* Streamlined navigation with fewer items */}
+      <div className="border-b border-gray-200 mb-6">
+        <nav className="flex" aria-label="Tabs">
+          <a 
+            href="#" 
+            className="border-b-2 border-blue-500 py-2 px-4 text-sm font-medium text-blue-600 whitespace-nowrap"
+            aria-current="page"
+          >
+            Job Application
+          </a>
+          <a 
+            href="#" 
+            className="border-b-2 border-transparent py-2 px-4 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap"
+          >
+            Resume
+          </a>
+          <a 
+            href="#" 
+            className="border-b-2 border-transparent py-2 px-4 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap"
+          >
+            Interview
+          </a>
+        </nav>
+      </div>
+      
+      {/* Personal Information section */}
+      <div className="mt-2">
+        <h2 className="text-lg font-medium text-gray-900 mb-4">Personal Information</h2>
+        
+        <div className="space-y-6">
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
               </svg>
-            </button>
-            <button className="p-1 hover:bg-gray-100 rounded">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500">Email Address</p>
+              <p className="mt-1 text-sm font-semibold text-blue-600">{candidate.personal.email}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
-            </button>
-            <button className="p-1 hover:bg-gray-100 rounded">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500">Phone Number</p>
+              <p className="mt-1 text-sm font-semibold text-gray-900">{candidate.personal.phone}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
-            </button>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500">Gender</p>
+              <p className="mt-1 text-sm font-semibold text-gray-900">{candidate.personal.gender}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500">Birthdate</p>
+              <p className="mt-1 text-sm font-semibold text-gray-900">{candidate.personal.birthDate}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500">Living Address</p>
+              <p className="mt-1 text-sm font-semibold text-gray-900">{candidate.personal.address}</p>
+            </div>
           </div>
         </div>
       </div>

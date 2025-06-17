@@ -4,10 +4,24 @@ import Sidebar from '../components/Sidebar';
 import CandidateProfile from '../components/CandidateProfile';
 import InterviewsList from '../components/InterviewsList';
 import Pagination from '../components/Pagination';
+import candidates from '../data/candidates';
 
 export default function Home() {
-  const [currentCandidate, setCurrentCandidate] = useState(1);
-  const totalCandidates = 56;
+  const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0);
+  const totalCandidates = candidates.length;
+  const currentCandidate = candidates[currentCandidateIndex];
+  
+  const handlePrevious = () => {
+    setCurrentCandidateIndex(prev => 
+      prev > 0 ? prev - 1 : prev
+    );
+  };
+  
+  const handleNext = () => {
+    setCurrentCandidateIndex(prev => 
+      prev < totalCandidates - 1 ? prev + 1 : prev
+    );
+  };
   
   return (
     <div className="min-h-screen flex bg-gray-100">
@@ -15,15 +29,15 @@ export default function Home() {
       <Sidebar />
       
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-4 md:p-6">
         <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           {/* Pagination header */}
           <div className="p-4 border-b flex justify-between items-center">
             <Pagination 
-              current={currentCandidate}
+              current={currentCandidateIndex + 1}
               total={totalCandidates}
-              onPrevious={() => setCurrentCandidate(prev => Math.max(1, prev - 1))}
-              onNext={() => setCurrentCandidate(prev => Math.min(totalCandidates, prev + 1))}
+              onPrevious={handlePrevious}
+              onNext={handleNext}
             />
             <button onClick={() => {}} className="text-gray-500 hover:text-gray-700">
               <span className="sr-only">Close</span>
@@ -36,12 +50,12 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row">
             {/* Candidate Profile */}
             <div className="lg:w-1/3 border-r">
-              <CandidateProfile />
+              <CandidateProfile candidate={currentCandidate} />
             </div>
             
             {/* Interviews List */}
             <div className="lg:w-2/3">
-              <InterviewsList />
+              <InterviewsList interviews={currentCandidate?.interviews || []} />
             </div>
           </div>
         </div>
