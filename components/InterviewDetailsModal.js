@@ -53,24 +53,26 @@ export default function InterviewDetailsModal({ interview, onClose }) {
             </div>
           </div>
           
-          {interview.status === 'Completed' && (
+          {interview.status === 'Completed' && interview.feedback && (
             <div className="mb-4">
               <div className="flex justify-between items-center">
                 <p className="text-xs text-gray-500 uppercase">Feedback Score</p>
                 <span className="text-sm font-semibold bg-green-100 text-green-800 rounded-full px-2 py-0.5">
-                  {interview.feedback?.score}/10
+                  {interview.feedback.score}
                 </span>
               </div>
             </div>
           )}
           
           {/* Notes Section */}
-          <div className="mb-4">
-            <p className="text-xs text-gray-500 uppercase mb-1">Notes</p>
-            <div className="bg-gray-50 p-3 rounded text-sm">
-              <p className="text-gray-700">{interview.notes || 'No notes available.'}</p>
+          {interview.notes && (
+            <div className="mb-4">
+              <p className="text-xs text-gray-500 uppercase mb-1">Notes</p>
+              <div className="bg-gray-50 p-3 rounded text-sm">
+                <p className="text-gray-700">{interview.notes}</p>
+              </div>
             </div>
-          </div>
+          )}
 
           {interview.status === 'Completed' && interview.feedback && (
             <div className="mb-4">
@@ -101,14 +103,9 @@ export default function InterviewDetailsModal({ interview, onClose }) {
         
         {/* Footer */}
         <div className="px-5 py-3 bg-gray-50 border-t flex justify-end">
-          {interview.status !== 'Completed' && (
-            <button className="mr-2 px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700">
-              Mark as Completed
-            </button>
-          )}
           <button 
             onClick={onClose}
-            className="px-3 py-1.5 bg-white border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 ml-2"
           >
             Close
           </button>
