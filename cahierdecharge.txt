@@ -1,0 +1,62 @@
+Cahier des Charges Plateforme Recrutement
+¨ Cahier des Charges – Interface de
+Gestion Candidat
+Projet P3 – Juin 2025
+Résumé
+Ce document décrit les spécifications techniques et visuelles d’une interface moderne permettant la gestion des entretiens d’un candidat, à partir d’une maquette Dribbble.
+1. Objectif du projet
+Créer une interface ergonomique et intuitive permettant de :
+¥ Visualiser les informations d’un candidat.
+¥ Gérer et ajouter des entretiens.
+¥ Simuler l’envoi d’e-mails depuis l’interface.
+2. Fonctionnalités prévues
+Informations du candidat
+Nom, e-mail, adresse, diplôme, genre, etc.
+Entretiens
+Affichage des entretiens : titre, recruteur, format, date, statut + bouton "View Details".
+Ajouter un entretien
+Formulaire avec :
+→ Date/heure
+→ Recruteur assigné
+→ Lien visio
+→ Message personnalisé
+Envoi Email
+Bouton pour simuler l’envoi d’un message depuis l’interface.
+3. Maquette de Référence
+Design choisi
+Inspirée de la maquette UI suivante :
+URL : dribbble.com/shot/25130933
+Aperçu intégré :
+1
+Cahier des Charges Plateforme Recrutement
+Éléments visuels :
+h Trois colonnes (menu – profil – entretiens)
+h Couleurs douces, typographie moderne
+h Boutons : Add Interview, View Details, Send Email
+h Layout responsive avec bonne hiérarchie visuelle
+4. Contraintes techniques
+ Next.js 14, React 18
+ Tailwind CSS 3.4
+ Aucune base réelle (simulation frontend)
+ Code propre et composanté
+ Responsive requis
+5. Livrables
+Code source (GitHub ou ZIP)
+README détaillé
+Lien démo déployée (Vercel, Netlify)
+Rapport LaTeX (ce document)
+2
+Cahier des Charges Plateforme Recrutement
+6. Planning prévisionnel
+Initialisation + UI Layout 1h
+Données candidat + infos affichées 1h
+Liste entretiens + bouton détail 1.5h
+Formulaire + validation 1h
+Simulation email 0.5h
+Responsive + styles finaux 1h
+Total estimé 6 h
+7. Conclusion
+L’application frontend respecte les contraintes d’ergonomie, d’élégance et de clarté attendues
+dans un outil RH moderne. La maquette Dribbble est fidèlement suivie, tout en assurant une logique
+métier cohérente et accessible.
+3

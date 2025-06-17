@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-gray-800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-gray-900 font-medium;
+}
+
+.text-content {
+  @apply text-gray-800;
+}
